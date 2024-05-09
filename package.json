@@ -14,6 +14,7 @@
     "react-redux": "^8.0.2",
     "react-router": "^6.22.3",
     "react-router-dom": "^5.3.0",
+    "sass": "^1.75.0",
     "web-vitals": "^2.1.4"
   },
   "devDependencies": {
@@ -28,9 +29,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "eslint \"src/**/*.{js,jsx}\"",
-    "fix": "eslint --fix \"src/**/*.{js,jsx}\"",
-    "format": "prettier --write \"src/**/*.{js,jsx,scss,css,html}\""
+    "lint-fix": "eslint --cache --fix src/ && prettier --write src/"
   },
   "eslintConfig": {
     "extends": [
