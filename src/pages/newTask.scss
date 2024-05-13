@@ -7,6 +7,7 @@
 
 .new-task-form {
   color: #555555;
+  width: 100%;
 }
 
 .new-task-select-list,
@@ -26,6 +27,7 @@
   width: 80px;
   height: 40px;
   border-radius: 5px;
+  margin-left: 20px;
 }
 
 .error-message {

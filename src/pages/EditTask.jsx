@@ -7,6 +7,18 @@ import { useHistory, useParams } from 'react-router-dom';
 import './editTask.scss';
 
 export const EditTask = () => {
+  var now = new Date();
+    var year = now.getFullYear();
+    var month = now.getMonth() + 1;
+    var day = now.getDate();
+    var hours = now.getHours();
+    var minutes = now.getMinutes();
+    month = month < 10 ? '0' + month : month;
+    day = day < 10 ? '0' + day : day;
+    hours = hours < 10 ? '0' + hours : hours;
+    minutes = minutes < 10 ? '0' + minutes : minutes;
+    var datetimeLocal = year + '-' + month + '-' + day + 'T' + hours + ':' + minutes;
+
   const history = useHistory();
   const { listId, taskId } = useParams();
   const [cookies] = useCookies();
@@ -14,15 +26,20 @@ export const EditTask = () => {
   const [detail, setDetail] = useState('');
   const [isDone, setIsDone] = useState();
   const [errorMessage, setErrorMessage] = useState('');
+  const [limit, setLimit] = useState('');
+  const [datetime, setDateTime] = useState(datetimeLocal)
   const handleTitleChange = (e) => setTitle(e.target.value);
   const handleDetailChange = (e) => setDetail(e.target.value);
   const handleIsDoneChange = (e) => setIsDone(e.target.value === 'done');
+  const handleLimitChange = (e) => setDateTime(e.target.value);
+
   const onUpdateTask = () => {
     console.log(isDone);
     const data = {
       title: title,
       detail: detail,
       done: isDone,
+      limit: limit,
     };
 
     axios
@@ -34,6 +51,7 @@ export const EditTask = () => {
       .then((res) => {
         console.log(res.data);
         history.push('/');
+        console.log(res);
       })
       .catch((err) => {
         setErrorMessage(`更新に失敗しました。${err}`);
@@ -67,11 +85,14 @@ export const EditTask = () => {
         setTitle(task.title);
         setDetail(task.detail);
         setIsDone(task.done);
+        setLimit(task.limit);
       })
       .catch((err) => {
         setErrorMessage(`タスク情報の取得に失敗しました。${err}`);
       });
   }, []);
+
+  console.log(datetime)
 
   return (
     <div>
@@ -98,6 +119,11 @@ export const EditTask = () => {
             value={detail}
           />
           <br />
+          <label>期限:</label>
+          <br />
+          更新前:{limit}
+          <br />
+          <input type="datetime-local" onChange={handleLimitChange} value={datetime}></input>
           <div>
             <input
               type="radio"
